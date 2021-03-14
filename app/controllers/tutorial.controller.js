@@ -33,6 +33,43 @@ exports.create = (req, res) => {
     });
 };
 
+// Login
+exports.login = (req, res) => {
+  // Validate request
+  if (!req.body.username) {
+    res.status(400).send({
+      message: "Username can not be empty!"
+    });
+    return;
+  }
+
+  if (!req.body.password) {
+    res.status(400).send({
+      message: "Password can not be empty!"
+    });
+    return;
+  }
+
+  // Create a Tutorial
+  const login = {
+    username: req.body.username,
+    password: req.body.password
+  };
+
+  var condition = login ? { username: login.username, raw_password: login.password } : null;
+
+  User.findAll({ where: condition })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving tutorials."
+    });
+  });
+};
+
 exports.findAlls = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
