@@ -60,7 +60,8 @@ exports.login = (req, res) => {
 
   User.findAll({ where: condition })
   .then(data => {
-    res.send(data);
+    let response = {data:data }
+    res.send(response);
   })
   .catch(err => {
     res.status(500).send({
