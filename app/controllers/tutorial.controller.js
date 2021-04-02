@@ -58,7 +58,7 @@ exports.login = (req, res) => {
 
   var condition = login ? { username: login.username, raw_password: login.password } : null;
 
-  User.findAll({ where: condition })
+  User.findOne({ where: condition })
   .then(data => {
     let response = {data:data }
     res.send(response);
